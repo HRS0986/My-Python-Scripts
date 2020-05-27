@@ -46,13 +46,13 @@ def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, 
 
     '''
     # Extract path and defaultPath status
-    path, isDefaultPath = pathT[0], pathT[1]
+    initialPath, isDefaultPath = pathT[0], pathT[1]
     
     try:
         # Path verifying part
         if not isDefaultPath:
             # Get the folder path from full save path
-            pathTemp = str(str(path[::-1])[path[::-1].index('\\'):])[::-1]
+            pathTemp = str(str(initialPath[::-1])[initialPath[::-1].index('\\'):])[::-1]
             # Verify the path
             isPathValid = os.path.exists(pathTemp)
             # Invalid Path Error
@@ -83,6 +83,9 @@ def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, 
     # Screen capturing part
     for shot in range(ssCount):
         
+        # Path setting
+        path = initialPath[:-4]+str(shot)+initialPath[-4:]
+
         ss = grab(bbox=(x1,y1,x2,y2))
         # Save Screenshot
         ss.save(path)
@@ -92,8 +95,14 @@ def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, 
             if OS == 'Windows':
                 os.system(f"attrib +h +s {path}")
             elif OS == 'Linux':
-                os.system(f'mv {path} .{path}')
-        
+                os.system(f'mv {path} .{path}')        
+       
+        # Delete the SS object
+        del ss
+
+        # Set path to initialPath
+        path = initialPath
+
         # Waiting for capture next screenshot
         time.sleep(delayBetweenSS)
     
