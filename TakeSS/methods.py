@@ -47,17 +47,21 @@ def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, 
     '''
     # Extract path and defaultPath status
     path, isDefaultPath = pathT[0], pathT[1]
-   
-    # Path verifying part
-    if not isDefaultPath:
-        # Get the folder path from full save path
-        pathTemp = str(str(path[::-1])[path[::-1].index('\\'):])[::-1]
-        # Verify the path
-        isPathValid = os.path.exists(pathTemp)
-        # Invalid Path Error
-        if not isPathValid:
-            print(Fore.RED + 'TakeSS: Path is not valid')
-            sys.exit(1)
+    
+    try:
+        # Path verifying part
+        if not isDefaultPath:
+            # Get the folder path from full save path
+            pathTemp = str(str(path[::-1])[path[::-1].index('\\'):])[::-1]
+            # Verify the path
+            isPathValid = os.path.exists(pathTemp)
+            # Invalid Path Error
+            if not isPathValid:
+                print(Fore.RED + 'TakeSS: Path is not valid')
+                sys.exit(1)
+    except ValueError:
+        print(Fore.RED + 'TakeSS: Path is not valid')
+        sys.exit(1)
 
     # Delay specific seconds
     time.sleep(delay)
