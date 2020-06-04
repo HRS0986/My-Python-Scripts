@@ -103,6 +103,9 @@ gap = args.F[0] if args.F else 0
 # Handle FC argument
 fc = args.F[1] if args.F else 1
 
+# fmode values
+fval = (flp, gap, fc)
+
 # Verify While loop mode status
 wlp = True if args.W else False
 
@@ -111,6 +114,9 @@ wd = args.W[0] if args.W else 0
 
 # Handle WC argument
 wc = args.W[1] if args.W else 1
+
+# wmode values
+wval = (wlp, wd, wc)
 
 # Verify Custom screenshot status
 box = True if args.B else False
@@ -123,5 +129,8 @@ y1 = args.B[1] if args.B else 0
 x2 = args.B[2] if args.B else GetSystemMetrics(0)
 y2 = args.B[3] if args.B else GetSystemMetrics(1)
 
+# coordinates
+coords = (x1, y1, x2, y2)
+
 # Screen capturing part
-mt.captureScreen(path, delay ,box, x1, y1, x2, y2, flp ,gap, fc, wlp, wd, wc, hide)
+mt.captureScreen(path, delay ,box, coords, fval, wval, hide)
