@@ -20,7 +20,7 @@ init()
 # Check what is the running OS
 OS = platform.system()
 
-def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, wc, isHide):
+def captureScreen(pathT:str, delay:int ,box:bool, coords:tuple, fval:tuple, wval:tuple, isHide:bool):
     
     '''
     This function captures the screenshot
@@ -28,17 +28,21 @@ def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, 
     params:
         pathT : path to save screenshot and default path status. Tuple value
 
-        delay : delay to start TakeSS in seconds. Integer value   
+        delay : delay to start TakeSS in seconds. Integer value
 
         box : set custome screenshot coordinates. Boolean Value
-            X1,Y1 : starting coordinates. Both are integer values
-            X2,Y2 : ending coordinates. Both are integer values
+            coords : screenshot coordinates. Tuple value
+                X1,Y1 : starting coordinates. Both are integer values
+                X2,Y2 : ending coordinates. Both are integer values
         
-        fmode : set the for loop mode. Boolean Value
+        
+        fval : for loop mode values. Tuple value
+            fmode : set the for loop mode. Boolean Value
             gap : delay between two screenshots. Integer value
             fc : number of screenshots to capture. Integer value
 
-        wmode : set the while loop mode. Boolean Value
+        wval : while loop mode values. Tuple value
+            wmode : set the while loop mode. Boolean Value
             wd : duration to take screenshots. Integer value
             wc : number of screenshots to capture within duration. Integer value
 
@@ -47,6 +51,15 @@ def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, 
     '''
     # Extract path and defaultPath status
     initialPath, isDefaultPath = pathT[0], pathT[1]
+
+    # Extract coordinates
+    x1, y1, x2, y2 = coords
+
+    # Extract for loop mode values
+    fmode, gap, fc = fval
+
+    # Extract while loop mode values
+    wmode, wd, wc = wval
     
     try:
         # Path verifying part
@@ -110,7 +123,7 @@ def captureScreen(pathT, delay ,box, x1, y1, x2, y2, fmode ,gap, fc, wmode, wd, 
         print(Fore.GREEN + f'TakeSS: Screenshot saved in {path}')
     sys.exit(1)
 
-def defaultName():
+def defaultName() -> tuple:
     
     '''
     This function create the default savefile name for the screenshot.
